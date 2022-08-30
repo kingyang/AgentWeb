@@ -1,33 +1,28 @@
 package com.daniu.english;
 
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 
     protected AgentWeb mAgentWeb;
     private LinearLayout mLinearLayout;
-//    private AlertDialog mAlertDialog;
+
     private WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
+       /* @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return super.shouldOverrideUrlLoading(view, request);
         }
@@ -35,8 +30,8 @@ public class MainActivity extends FragmentActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             //do you  work
-            Log.i("Info", "BaseWebActivity onPageStarted");
-        }
+            Log.i("Info", "AgentWeb onPageStarted");
+        }*/
     };
     private WebChromeClient mWebChromeClient = new WebChromeClient() {
         /*@Override
@@ -73,35 +68,11 @@ public class MainActivity extends FragmentActivity {
     }
 
     public String getUrl() {
-        return "https://m.jd.com/";
+//        return "https://m.jd.com/";
+//        return "https://haokan.baidu.com/v?vid=8743858962417479184&tab=recommend&sfrom=recommend&source=";
+        return "https://haokan.baidu.com/v?vid=8743858962417479184";
+
     }
-
-
-    /*private void showDialog() {
-        if (mAlertDialog == null) {
-            mAlertDialog = new AlertDialog.Builder(this)
-                    .setMessage("您确定要关闭该页面吗?")
-                    .setNegativeButton("再逛逛", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (mAlertDialog != null) {
-                                mAlertDialog.dismiss();
-                            }
-                        }
-                    })//
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            if (mAlertDialog != null) {
-                                mAlertDialog.dismiss();
-                            }
-                            MainActivity.this.finish();
-                        }
-                    }).create();
-        }
-        mAlertDialog.show();
-    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -132,7 +103,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mAgentWeb.destroy();
         mAgentWeb.getWebLifeCycle().onDestroy();
     }
 }

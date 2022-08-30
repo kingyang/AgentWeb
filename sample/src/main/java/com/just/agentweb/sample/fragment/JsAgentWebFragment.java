@@ -57,8 +57,6 @@ public class JsAgentWebFragment extends AgentWebFragment {
         view.findViewById(R.id.callJsMoreParamsButton).setOnClickListener(mOnClickListener);
         view.findViewById(R.id.jsJavaCommunicationButton).setOnClickListener(mOnClickListener);
 
-
-
     }
 
     private View.OnClickListener mOnClickListener=new View.OnClickListener() {

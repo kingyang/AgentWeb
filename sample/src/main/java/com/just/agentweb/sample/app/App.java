@@ -3,6 +3,8 @@ package com.just.agentweb.sample.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.MutableContextWrapper;
+import android.webkit.WebView;
 
 import com.just.agentweb.AgentWebCompat;
 import com.just.agentweb.sample.service.WebService;
@@ -16,6 +18,16 @@ import com.squareup.leakcanary.LeakCanary;
 
 public class App extends Application {
 
+
+    public static Context mContext;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        mContext = base;
+        AgentWebCompat.setDataDirectorySuffix(base);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,7 +38,7 @@ public class App extends Application {
          * 坏处，拖慢了App 冷启动速度，如果 WebView 配合 VasSonic 使用，
          * 建议不要在此处提前初始化 WebView 。
          */
-//        WebView mWebView=new WebView(new MutableContextWrapper(this));
+        WebView mWebView=new WebView(new MutableContextWrapper(this));
 
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
@@ -49,14 +61,7 @@ public class App extends Application {
         });
     }
 
-    public static Context mContext;
 
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        mContext = base;
-        AgentWebCompat.setDataDirectorySuffix(base);
-    }
 
 
 }

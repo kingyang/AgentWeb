@@ -36,6 +36,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    implementation 'com.github.Justson:dispatch-queue:v1.0.5'
     api project(':agentweb-core')
     api project(':agentweb-filechooser')
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
