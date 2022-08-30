@@ -110,8 +110,6 @@ public final class AgentActionFragment extends Fragment {
         }
     }
 
-
-
     private void choose() {
         try {
             if (mAction.getChooserListener() == null) {
@@ -229,7 +227,6 @@ public final class AgentActionFragment extends Fragment {
             }
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

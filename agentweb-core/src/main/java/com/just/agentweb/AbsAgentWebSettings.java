@@ -32,18 +32,18 @@ import android.webkit.WebViewClient;
  */
 
 public abstract class AbsAgentWebSettings implements IAgentWebSettings, WebListenerManager {
-    private WebSettings mWebSettings;
-    private static final String TAG = AbsAgentWebSettings.class.getSimpleName();
     public static final String USERAGENT_UC = " UCBrowser/11.6.4.950 ";
     public static final String USERAGENT_QQ_BROWSER = " MQQBrowser/8.0 ";
     public static final String USERAGENT_AGENTWEB = " " + AgentWebConfig.AGENTWEB_VERSION + " ";
+    private static final String TAG = AbsAgentWebSettings.class.getSimpleName();
     protected AgentWeb mAgentWeb;
+    private WebSettings mWebSettings;
+
+    public AbsAgentWebSettings() {
+    }
 
     public static AbsAgentWebSettings getInstance() {
         return new AgentWebSettingsImpl();
-    }
-
-    public AbsAgentWebSettings() {
     }
 
     final void bindAgentWeb(AgentWeb agentWeb) {
@@ -83,7 +83,9 @@ public abstract class AbsAgentWebSettings implements IAgentWebSettings, WebListe
         }
         mWebSettings.setTextZoom(100);
         mWebSettings.setDatabaseEnabled(true);
-        mWebSettings.setAppCacheEnabled(true);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            mWebSettings.setAppCacheEnabled(true);
+        }
         mWebSettings.setLoadsImagesAutomatically(true);
         mWebSettings.setSupportMultipleWindows(false);
         // 是否阻塞加载网络图片  协议http or https

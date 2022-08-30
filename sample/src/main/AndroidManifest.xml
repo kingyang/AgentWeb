@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.just.agentweb.sample">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -23,7 +24,9 @@
         android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme">
-        <activity android:name="com.just.agentweb.sample.activity.MainActivity">
+        <activity
+            android:exported="true"
+            android:name="com.just.agentweb.sample.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,10 +34,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:exported="false"
             android:name="com.just.agentweb.sample.activity.WebActivity"
             android:launchMode="singleTop" />
 
         <activity
+            android:exported="false"
             android:name="com.just.agentweb.sample.activity.RemoteWebViewlActivity"
             android:launchMode="singleTop"
             android:process=":web" />
@@ -44,22 +49,28 @@
             android:process=":web" />
 
         <activity
+            android:exported="false"
             android:name="com.just.agentweb.sample.activity.CommonActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop" />
         <activity
+            android:exported="false"
             android:name="com.just.agentweb.sample.activity.EasyWebActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" />
 
         <activity
+            android:exported="false"
             android:name="com.just.agentweb.sample.activity.ContainerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor" />
-        <activity android:name=".activity.AutoHidenToolbarActivity" />
+        <activity
+            android:exported="false"
+            android:name=".activity.AutoHidenToolbarActivity" />
 
         <activity
+            android:exported="false"
             android:name=".activity.NativeDownloadActivity"
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor" />
@@ -73,7 +84,8 @@
             android:authorities="com.just.agentweb.sample.web"
             android:process=":web" />
 
-        <activity android:name=".activity.ExternalActivity">
+        <activity android:exported="false" android:name=".activity.ExternalActivity"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

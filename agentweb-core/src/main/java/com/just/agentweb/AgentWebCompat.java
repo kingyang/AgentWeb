@@ -24,6 +24,7 @@ public class AgentWebCompat {
      * 来之 https://github.com/Justson/AgentWeb/issues/934 建议
      * https://juejin.cn/post/6950091477192015902
      * fix Using WebView from more than one process
+     *
      * @param context
      */
     public static void setDataDirectorySuffix(Context context) {
@@ -47,7 +48,7 @@ public class AgentWebCompat {
                 if (RomUtils.isHuawei()) {
                     pathSet.add(dataPath + huaweiWebViewDir + suffix + lockFile);
                 }
-            }else{
+            } else {
                 //主进程
                 suffix = "_" + processName;
                 pathSet.add(dataPath + webViewDir + lockFile);//默认未添加进程名后缀
@@ -88,7 +89,7 @@ public class AgentWebCompat {
         }
     }
 
-    private static void createFile(File file, boolean deleted){
+    private static void createFile(File file, boolean deleted) {
         try {
             if (deleted && !file.exists()) {
                 file.createNewFile();

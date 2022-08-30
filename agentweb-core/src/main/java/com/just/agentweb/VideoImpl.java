@@ -23,11 +23,15 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+
 import androidx.core.util.Pair;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,8 +44,8 @@ public class VideoImpl implements IVideo, EventInterceptor {
     private WebView mWebView;
     private static final String TAG = VideoImpl.class.getSimpleName();
     private Set<Pair<Integer, Integer>> mFlags = null;
-    private View mMoiveView = null;
-    private ViewGroup mMoiveParentView = null;
+    private View mMovieView = null;
+    private ViewGroup mMovieParentView = null;
     private WebChromeClient.CustomViewCallback mCallback;
     private int mOriginalOrientation;
 
@@ -68,6 +72,7 @@ public class VideoImpl implements IVideo, EventInterceptor {
                     WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             mFlags.add(mPair);
         }
+        // 开启硬件加速
         if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                 && (mWindow.getAttributes().flags
                 & WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED) == 0) {
@@ -76,49 +81,68 @@ public class VideoImpl implements IVideo, EventInterceptor {
                     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
             mFlags.add(mPair);
         }
-        if (mMoiveView != null) {
+
+        // 全屏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = mWindow.getInsetsController();
+            controller.hide(WindowInsets.Type.statusBars());
+        }
+        mPair = new Pair<>(WindowManager.LayoutParams.FLAG_FULLSCREEN, 0);
+        mWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mFlags.add(mPair);
+
+        if (mMovieView != null) {
             callback.onCustomViewHidden();
             return;
         }
         if (mWebView != null) {
             mWebView.setVisibility(View.GONE);
         }
-        if (mMoiveParentView == null) {
+        if (mMovieParentView == null) {
             FrameLayout mContentView = mActivity.findViewById(android.R.id.content);
-            mMoiveParentView = new FrameLayout(mActivity);
-            mMoiveParentView.setBackgroundColor(Color.BLACK);
-            mContentView.addView(mMoiveParentView);
+            mMovieParentView = new FrameLayout(mActivity);
+            mMovieParentView.setBackgroundColor(Color.BLACK);
+            mContentView.addView(mMovieParentView);
         }
         this.mCallback = callback;
-        mMoiveParentView.addView(this.mMoiveView = view);
-        mMoiveParentView.setVisibility(View.VISIBLE);
+        mMovieParentView.addView(this.mMovieView = view);
+        mMovieParentView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onHideCustomView() {
-        if (mMoiveView == null) {
+        if (mMovieView == null) {
             return;
         }
         if (mActivity != null) {
             mActivity.setRequestedOrientation(mOriginalOrientation);
         }
+        Window mWindow = mActivity.getWindow();
         if (!mFlags.isEmpty()) {
             for (Pair<Integer, Integer> mPair : mFlags) {
-                mActivity.getWindow().setFlags(mPair.second, mPair.first);
+                mWindow.setFlags(mPair.second, mPair.first);
             }
             mFlags.clear();
         }
-        mMoiveView.setVisibility(View.GONE);
-        if (mMoiveParentView != null && mMoiveView != null) {
-            mMoiveParentView.removeView(mMoiveView);
+
+        // 全屏
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = mWindow.getInsetsController();
+            controller.show(WindowInsets.Type.statusBars());
+        }*/
+
+        mMovieView.setVisibility(View.GONE);
+        if (mMovieParentView != null && mMovieView != null) {
+            mMovieParentView.removeView(mMovieView);
         }
-        if (mMoiveParentView != null) {
-            mMoiveParentView.setVisibility(View.GONE);
+        if (mMovieParentView != null) {
+            mMovieParentView.setVisibility(View.GONE);
         }
         if (this.mCallback != null) {
             mCallback.onCustomViewHidden();
         }
-        this.mMoiveView = null;
+        this.mMovieView = null;
         if (mWebView != null) {
             mWebView.setVisibility(View.VISIBLE);
         }
@@ -126,7 +150,7 @@ public class VideoImpl implements IVideo, EventInterceptor {
 
     @Override
     public boolean isVideoState() {
-        return mMoiveView != null;
+        return mMovieView != null;
     }
 
     @Override
