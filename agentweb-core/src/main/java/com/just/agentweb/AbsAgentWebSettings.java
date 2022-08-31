@@ -121,11 +121,6 @@ public abstract class AbsAgentWebSettings implements IAgentWebSettings, WebListe
         mWebSettings.setAppCachePath(dir);
         //缓存文件最大值
         mWebSettings.setAppCacheMaxSize(Long.MAX_VALUE);
-        mWebSettings.setUserAgentString(getWebSettings()
-                .getUserAgentString()
-                .concat(USERAGENT_AGENTWEB)
-                .concat(USERAGENT_UC)
-        );
         LogUtils.i(TAG, "UserAgentString : " + mWebSettings.getUserAgentString());
     }
 

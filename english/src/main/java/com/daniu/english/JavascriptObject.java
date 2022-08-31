@@ -3,6 +3,7 @@ package com.daniu.english;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.just.agentweb.AgentWebUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -19,6 +22,7 @@ import org.json.JSONTokener;
 public class JavascriptObject {
     private MainActivity activity;
     private Handler deliver = new Handler(Looper.getMainLooper());
+
     public JavascriptObject(MainActivity activity) {
         this.activity = activity;
     }
@@ -66,8 +70,8 @@ public class JavascriptObject {
                     String value = sharedPreferences.getString(key, "");
                     jsonObject.put("value", value);
                 }
+                break;
             }
-            break;
             case "dataSet": {
                 String key = jsonObject.optString("key");
                 if (key == null || key.length() == 0) {
@@ -80,14 +84,26 @@ public class JavascriptObject {
                     editor.commit();
                     jsonObject.put("value", value);
                 }
+                break;
             }
-            break;
+            case "clearCache":
+                AgentWebUtils.clearWebViewAllCache(activity.getBaseContext());
+                break;
+            case "desktop": {
+                Intent home = new Intent(Intent.ACTION_MAIN);
+                home.addCategory(Intent.CATEGORY_HOME);
+                activity.startActivity(home);
+                break;
+            }
             case "ready":
                 break;
-            default: {
+            case "version":
+                jsonObject.put("version_code", BuildConfig.VERSION_CODE);
+                jsonObject.put("version_name", BuildConfig.VERSION_NAME);
+                break;
+            default:
                 jsonObject.put("error", "unknown action:" + action);
-            }
-            break;
+                break;
         }
     }
 }
