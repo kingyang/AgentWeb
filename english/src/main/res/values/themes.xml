@@ -6,7 +6,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
-    <style name="Theme.NoTitle"  parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.NoTitle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:windowNoTitle">true</item>
     </style>
 </resources>

@@ -24,7 +24,7 @@ public class WebService extends Service {
         Log.e(TAG, "init process");
         try {
             new WebView(this.getApplicationContext());
-        }catch (Throwable throwable){
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }

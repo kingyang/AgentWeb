@@ -113,7 +113,7 @@ public class BaseWebActivity extends AppCompatActivity {
     };
 
     public String getUrl() {
-        return "https://m.jd.com/";
+        return "https://haokan.baidu.com/v?vid=8743858962417479184";
     }
 
 

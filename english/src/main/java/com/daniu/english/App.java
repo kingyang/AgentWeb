@@ -4,8 +4,6 @@ package com.daniu.english;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.MutableContextWrapper;
-import android.webkit.WebView;
 
 import com.just.agentweb.AgentWebCompat;
 import com.queue.library.GlobalQueue;
@@ -40,8 +38,6 @@ public class App extends Application {
             }
         });
     }
-
-
 
 
 }

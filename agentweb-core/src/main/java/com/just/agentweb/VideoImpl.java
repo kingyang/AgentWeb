@@ -83,10 +83,10 @@ public class VideoImpl implements IVideo, EventInterceptor {
         }
 
         // 全屏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             WindowInsetsController controller = mWindow.getInsetsController();
             controller.hide(WindowInsets.Type.statusBars());
-        }
+        }*/
         mPair = new Pair<>(WindowManager.LayoutParams.FLAG_FULLSCREEN, 0);
         mWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -127,10 +127,10 @@ public class VideoImpl implements IVideo, EventInterceptor {
         }
 
         // 全屏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             WindowInsetsController controller = mWindow.getInsetsController();
             controller.show(WindowInsets.Type.statusBars());
-        }
+        }*/
 
         mMovieView.setVisibility(View.GONE);
         if (mMovieParentView != null && mMovieView != null) {
